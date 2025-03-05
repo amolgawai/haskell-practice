@@ -1,5 +1,6 @@
 module Main (main) where
 
+import Lib
 import System.Environment
 
 printHelpText :: String -> IO ()
@@ -8,9 +9,16 @@ printHelpText msg = do
   progName <- getProgName
   putStrLn ("Usage: " ++ progName ++ " <filename>")
 
-parseArgs :: [String] -> Maybe FilePath
-parseArgs [filePath] = Just filePath
-parseArgs _ = Nothing
+readLines :: FilePath -> IO [String]
+readLines filePath = do
+  contents <- readFile filePath
+  return (lines contents)
+
+printFile :: FilePath -> IO ()
+printFile filePath = do
+  mContent <- readLines filePath
+  let mNumberedLines = numberLines mContent
+  mapM_ print mNumberedLines
 
 main :: IO ()
 main = do
@@ -18,5 +26,5 @@ main = do
   let mFilePath = parseArgs cliArgs
   maybe
     (printHelpText "Missing Filename argument")
-    putStrLn
+    printFile
     mFilePath
