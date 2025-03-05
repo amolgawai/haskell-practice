@@ -70,3 +70,21 @@ sumSquareOrSquareSumLet x y =
   let sumSquare = (x ^ 2 + y ^ 2)
       squareSum = (x + y) ^ 2
    in if sumSquare > squareSum then sumSquare else squareSum
+
+-- Chapter 4 - first class functions
+-- function as arguments
+
+ifEven :: (Int -> Int) -> Int -> Int
+ifEven aFunction x = if even x then aFunction x else x
+
+incNum n = n + 1
+
+doubleNum n = n * 2
+
+squareNum n = n * n
+
+incIfEven = ifEven incNum
+
+doubleIfEven = ifEven doubleNum
+
+squareIfEven = ifEven squareIfEven
