@@ -18,7 +18,8 @@ printFile :: FilePath -> IO ()
 printFile filePath = do
   mContent <- readLines filePath
   let mNumberedLines = numberLines mContent
-  mapM_ print mNumberedLines
+  let prettyLines = prettyPrintNumberedLines AlignRight mNumberedLines
+  mapM_ putStrLn prettyLines
 
 main :: IO ()
 main = do
